@@ -16,7 +16,7 @@ function createWindow() {
     },
   });
 
-  /*win.removeMenu();*/
+  /*win.removeMenu(); mnau*/
   win.loadFile(path.join(__dirname, "render", "login.html"));
   win.webContents.openDevTools({ mode: "detach" });
   
