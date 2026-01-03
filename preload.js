@@ -5,7 +5,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
   loadPage: (page) => ipcRenderer.send("load-page", page),
   registerUser: (data) => ipcRenderer.invoke("register-user", data),
   loginUser: (data) => ipcRenderer.invoke("login-user", data),
-  getInstalledApps: () => ipcRenderer.invoke("get-installed-apps")
+  getInstalledApps: () => ipcRenderer.invoke("get-installed-apps"),
 });
 
 

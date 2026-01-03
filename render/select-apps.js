@@ -49,10 +49,11 @@ function filterApps(apps) {
     "Microsoft System CLR Types for SQL Server ",
     "Ovládací panel",
     "Kontrola stavu",
-    "Sada Compatibility "
+    "Sada Compatibility ",
+    "2007 Microsoft Office Suite Service Pack 3"
   ];
 
-  return apps.filter(app => {
+/*  return apps.filter(app => {
     if (ignoredExact.includes(app)) return false;
     if (ignoredStartsWith.some(prefix => app.startsWith(prefix))) return false;
     return true;
@@ -62,8 +63,42 @@ function filterApps(apps) {
 async function testInstalledApps() {
   try {
     let apps = await window.electronAPI.getInstalledApps();
-    apps = filterApps(apps);
+    //apps = filterApps(apps);
     console.log(apps); 
+  } catch (err) {
+    console.error("Chyba při získávání aplikací:", err);
+  }
+}
+
+
+testInstalledApps();*/
+  return apps.filter(app => {
+    if (ignoredExact.includes(app.name)) return false;
+    if (ignoredStartsWith.some(prefix => app.name.startsWith(prefix))) return false;
+    return true;
+  });
+}
+
+async function testInstalledApps() {
+  try {
+    let apps = await window.electronAPI.getInstalledApps();
+    apps = filterApps(apps);
+    console.log(apps);
+    let list = document.getElementById("appsContainer");
+        for (i = 0; i < apps.length; ++i) {
+          const appToSelect = document.createElement('input');
+          appToSelect.type = 'checkbox';
+          appToSelect.id = apps[i].name; // add id for label association
+          appToSelect.name = apps[i].name;
+          appToSelect.value = apps[i].name;
+          list.appendChild(appToSelect);
+
+          const label = document.createElement('label');
+          label.htmlFor = apps[i].name; // connect to checkbox id
+          label.textContent = apps[i].name;
+          list.appendChild(label);
+          list.appendChild(document.createElement('br'));
+        } 
   } catch (err) {
     console.error("Chyba při získávání aplikací:", err);
   }

@@ -2,7 +2,6 @@ const path = require("path");
 const { exec } = require('child_process');
 const { app, BrowserWindow, ipcMain } = require("electron");
 const fs = require("fs");
-//app.setPath("userData", path.join(app.getPath("documents"), "Gameholicure"));
 let win;
 
 function createWindow() {
@@ -82,8 +81,8 @@ ipcMain.handle("login-user", async (event, data) => {
     };
   }
 });
-
-/*ipcMain.handle("get-installed-apps", async () => {
+/*
+ipcMain.handle("get-installed-apps", async () => {
   return new Promise((resolve, reject) => {
 
     const cmd =
@@ -109,55 +108,45 @@ ipcMain.handle("login-user", async (event, data) => {
     });
   });
 });*/
-ipcMain.handle("get-installed-apps", async () => {
+//const { exec } = require("child_process");
 
+ipcMain.handle("get-installed-apps", async () => {
   return new Promise((resolve, reject) => {
     const cmd = `
-      Get-ItemProperty
-        HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*,
-        HKLM:\\Software\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*,
-        HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\* |
+      Get-ItemProperty 'HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*' , 
+      'HKLM:\\Software\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*' , 
+      'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*' |
       Where-Object { $_.DisplayName } |
-      Select-Object DisplayName, DisplayIcon, InstallLocation |
-      ConvertTo-Json
-    `;
+      ForEach-Object { 
+        $icon = if ($_.DisplayIcon) { ($_.DisplayIcon -split ',')[0] } else { '' }
+        Write-Output ($_.DisplayName + '||' + $icon)
+      }
+    `.replace(/\n/g, ' ').trim();
 
-    exec(`powershell -NoProfile -Command "${cmd}"`, (err, stdout) => {
-      if (err) return reject(err);
-      const raw = JSON.parse(stdout);
-      const apps = raw.map(app => {
-        let exe = null;
-        if (app.DisplayIcon) {
-          exe = app.DisplayIcon
-            .split(',')[0]
-            .split('\\')
-            .pop();
+    exec(`powershell -NoProfile -Command "${cmd.replace(/"/g, '\\"')}"`, 
+      { maxBuffer: 1024 * 1024 * 10 }, 
+      (err, stdout, stderr) => {
+        if (err) {
+          console.error(stderr || err);
+          return reject(err);
         }
-        
-        return {
-          name: app.DisplayName,
-          exe_name: exe,
-        };
-      });
-      resolve(apps);
-    });
+
+        const apps = stdout
+          .split(/\r?\n/)
+          .map(l => l.trim())
+          .filter(Boolean)
+          .map(line => {
+            const [name, iconPath] = line.split("||");
+            return {
+              name,
+              exe_name: iconPath ? iconPath.split('\\').pop() : null
+            };
+          });
+        resolve(apps);
+      }
+    );
   });
 });
 
 
 
-/*const { exec } = require('child_process');
-
-exec('powershell "Get-ItemProperty HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\* | Select-Object DisplayName"', (error, stdout, stderr) => {
-  if (error) {
-    console.error(`Chyba: ${error.message}`);
-    return;
-  }
-  const aplikace = stdout
-    .split('\n')
-    .map(line => line.trim()) 
-    .filter(line => line !== ''); 
-  
-  console.log('Seznam nainstalovaných aplikací:');
-  console.log(aplikace);
-});*/

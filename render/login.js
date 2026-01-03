@@ -21,7 +21,9 @@ btn.addEventListener("click", async () => {
 
   if (result.success) {
     status.textContent = "Přihlášení bylo úspěšné";
-    changePage("render/home-page.html");
+    //changePage("render/home-page.html");
+    //jen na testování přechodu na select-apps stránku
+    changePage("render/select-apps.html");
   } else {
     status.textContent = result.message;
   }
