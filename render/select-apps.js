@@ -53,25 +53,6 @@ function filterApps(apps) {
     "2007 Microsoft Office Suite Service Pack 3"
   ];
 
-/*  return apps.filter(app => {
-    if (ignoredExact.includes(app)) return false;
-    if (ignoredStartsWith.some(prefix => app.startsWith(prefix))) return false;
-    return true;
-  });
-}
-
-async function testInstalledApps() {
-  try {
-    let apps = await window.electronAPI.getInstalledApps();
-    //apps = filterApps(apps);
-    console.log(apps); 
-  } catch (err) {
-    console.error("Chyba při získávání aplikací:", err);
-  }
-}
-
-
-testInstalledApps();*/
   return apps.filter(app => {
     if (ignoredExact.includes(app.name)) return false;
     if (ignoredStartsWith.some(prefix => app.name.startsWith(prefix))) return false;
@@ -79,30 +60,50 @@ testInstalledApps();*/
   });
 }
 
-async function testInstalledApps() {
-  try {
-    let apps = await window.electronAPI.getInstalledApps();
-    apps = filterApps(apps);
-    console.log(apps);
-    let list = document.getElementById("appsContainer");
-        for (i = 0; i < apps.length; ++i) {
-          const appToSelect = document.createElement('input');
-          appToSelect.type = 'checkbox';
-          appToSelect.id = apps[i].name; // add id for label association
-          appToSelect.name = apps[i].name;
-          appToSelect.value = apps[i].name;
-          list.appendChild(appToSelect);
+apps = [];
 
-          const label = document.createElement('label');
-          label.htmlFor = apps[i].name; // connect to checkbox id
-          label.textContent = apps[i].name;
-          list.appendChild(label);
-          list.appendChild(document.createElement('br'));
-        } 
-  } catch (err) {
-    console.error("Chyba při získávání aplikací:", err);
-  }
+async function getInstalledApps() {
+  apps = await window.electronAPI.getInstalledApps();
+  apps = filterApps(apps);
+  console.log(apps);
+  let list = document.getElementById("appsContainer");
+  for (i = 0; i < apps.length; ++i) {
+    const appToSelect = document.createElement('input');
+    appToSelect.type = 'checkbox';
+    appToSelect.id = apps[i].name; 
+    appToSelect.name = apps[i].name;
+    appToSelect.value = apps[i].name;
+    list.appendChild(appToSelect);
+
+    const label = document.createElement('label');
+    label.htmlFor = apps[i].name; 
+    label.textContent = apps[i].name;
+    list.appendChild(label);
+    list.appendChild(document.createElement('br'));
+  } 
 }
 
-testInstalledApps();
+getInstalledApps();
 
+function sendApps() {
+  let selectedApps = [];
+  let selectedAppsExe = [];
+  const checkboxes = document.querySelectorAll('#appsContainer input[type="checkbox"]');
+  checkboxes.forEach(checkbox => {
+    if (checkbox.checked) {
+      const app = apps.find(a => a.name === checkbox.value);
+      if (app) {
+        selectedApps.push(app.name);
+        selectedAppsExe.push(app.exe_name);
+      }
+    }
+  });
+  console.log(selectedApps);
+  console.log(selectedAppsExe);
+  //window.electronAPI.sendSelectedApps(selectedApps);
+}
+
+var el = document.getElementById("saveAppsBtn");
+if (el.addEventListener) {
+  el.addEventListener("click", () => sendApps()); 
+}

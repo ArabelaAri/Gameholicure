@@ -6,6 +6,8 @@ contextBridge.exposeInMainWorld("electronAPI", {
   registerUser: (data) => ipcRenderer.invoke("register-user", data),
   loginUser: (data) => ipcRenderer.invoke("login-user", data),
   getInstalledApps: () => ipcRenderer.invoke("get-installed-apps"),
+  setToken: (token) => ipcRenderer.invoke("set-token", token),
+  getToken: () => ipcRenderer.invoke("get-token")
 });
 
 

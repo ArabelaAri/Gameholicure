@@ -21,6 +21,8 @@ btn.addEventListener("click", async () => {
 
   if (result.success) {
     status.textContent = "Přihlášení bylo úspěšné";
+    window.electronAPI.setToken(result.token);
+    //const testToken = await window.electronAPI.getToken();
     //changePage("render/home-page.html");
     //jen na testování přechodu na select-apps stránku
     changePage("render/select-apps.html");

@@ -2,6 +2,8 @@ const path = require("path");
 const { exec } = require('child_process');
 const { app, BrowserWindow, ipcMain } = require("electron");
 const fs = require("fs");
+const Store = require("electron-store").default;
+const store = new Store();
 let win;
 
 function createWindow() {
@@ -81,34 +83,6 @@ ipcMain.handle("login-user", async (event, data) => {
     };
   }
 });
-/*
-ipcMain.handle("get-installed-apps", async () => {
-  return new Promise((resolve, reject) => {
-
-    const cmd =
-      'Get-ItemProperty ' +
-      '"HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*", ' +
-      '"HKLM:\\Software\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*", ' +
-      '"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*" | ' +
-      'Where-Object { $_.DisplayName } | ' +
-      'ForEach-Object { $_.DisplayName }';
-
-    exec(`powershell -NoProfile -Command "${cmd}"`, (error, stdout, stderr) => {
-      if (error) {
-        console.error(stderr);
-        return reject(error);
-      }
-
-      const apps = stdout
-        .split(/\r?\n/)
-        .map(a => a.trim())
-        .filter(a => a.length > 0);
-
-      resolve([...new Set(apps)]);
-    });
-  });
-});*/
-//const { exec } = require("child_process");
 
 ipcMain.handle("get-installed-apps", async () => {
   return new Promise((resolve, reject) => {
@@ -148,5 +122,10 @@ ipcMain.handle("get-installed-apps", async () => {
   });
 });
 
-
+ipcMain.handle("set-token", (_, token) => {
+  store.set("token", token);
+});
+ipcMain.handle("get-token", () => {
+  return store.get("token");
+});
 
