@@ -128,4 +128,30 @@ ipcMain.handle("set-token", (_, token) => {
 ipcMain.handle("get-token", () => {
   return store.get("token");
 });
+ipcMain.handle("set-user-id", (_, id) => {
+  store.set("user_id", id);
+});
+
+ipcMain.handle("get-user-id", async (event, data) => {
+  try {
+    const response = await fetch("https://student.sspbrno.cz/~kozinova.adela/GAMEHOLICURE/set-token-id.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ token: data.token })
+    });
+
+    const result = await response.json();
+    return result;
+
+  } catch (err) {
+    return {
+      success: false,
+      message: "Chyba připojení k serveru"
+    };
+  }
+});
+
+
 
