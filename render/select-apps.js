@@ -56,6 +56,7 @@ function filterApps(apps) {
   return apps.filter(app => {
     if (ignoredExact.includes(app.name)) return false;
     if (ignoredStartsWith.some(prefix => app.name.startsWith(prefix))) return false;
+    if(!app.exe_name || !app.exe_name.toLowerCase().endsWith(".exe")) return false;
     return true;
   });
 }
@@ -85,25 +86,80 @@ async function getInstalledApps() {
 
 getInstalledApps();
 
-function sendApps() {
-  let selectedApps = [];
-  let selectedAppsExe = [];
+let selectedApps = [];
+let selectedAppsExe = [];
+
+async function sendApps() {
   const checkboxes = document.querySelectorAll('#appsContainer input[type="checkbox"]');
   checkboxes.forEach(checkbox => {
     if (checkbox.checked) {
       const app = apps.find(a => a.name === checkbox.value);
       if (app) {
         selectedApps.push(app.name);
-        selectedAppsExe.push(app.exe_name);
+        selectedAppsExe.push(app.exe_name); 
       }
     }
   });
-  console.log(selectedApps);
-  console.log(selectedAppsExe);
-  //window.electronAPI.sendSelectedApps(selectedApps);
+
+  if (selectedApps.length === 0) {
+    alert("Prosím, vyberte alespoň jednu aplikaci.");
+    return;
+  }
+
+  showModal();
 }
 
 var el = document.getElementById("saveAppsBtn");
 if (el.addEventListener) {
-  el.addEventListener("click", () => sendApps()); 
+  el.addEventListener("click", async () => sendApps()); 
 }
+
+
+const modal = document.getElementById("myModal");
+let currentIndex = 0;
+let appDates = {};
+
+function showModal() {
+  const modal = document.getElementById("myModal");
+  modal.style.display = "block";
+
+  document.getElementById("appName").innerHTML = selectedApps[currentIndex];
+}
+
+document.getElementById("saveAppDate").onclick = function () {
+  const inputDate = document.getElementById("inputDate").value;
+  const inputTime = document.getElementById("inputTime").value;
+  if (!inputDate) {
+    alert("Prosím, vyberte datum posledního spuštění.");
+    return;
+  }
+  if (inputTime) {
+    appDates[selectedApps[currentIndex]] = inputDate + " " + inputTime + ":00";
+    document.getElementById("inputTime").value = "";
+  } else {
+    appDates[selectedApps[currentIndex]] = inputDate+ " 00:00:00";
+  }
+  document.getElementById("inputDate").value = "";
+
+  currentIndex++;
+
+  if (currentIndex < selectedApps.length) {
+    showModal(); 
+  } else {
+    console.log(appDates);
+    document.getElementById("myModal").style.display = "none";
+
+    window.electronAPI.sendSelectedApps({
+      apps: selectedApps,
+      apps_exe: selectedAppsExe
+    });
+  }
+};
+
+document.getElementById("stepBack").onclick = function () {
+  currentIndex--;
+  if (currentIndex < 0) {
+    currentIndex = 0;
+  }
+  showModal();
+};
