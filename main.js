@@ -160,7 +160,9 @@ ipcMain.handle("send-selected-apps", async (event, data) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         apps: data.apps,
-        apps_exe: data.apps_exe
+        apps_exe: data.apps_exe,
+        app_dates: data.app_dates,
+        user_id: data.user_id
       })
     });
 

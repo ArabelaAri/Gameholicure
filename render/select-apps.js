@@ -126,7 +126,14 @@ function showModal() {
   document.getElementById("appName").innerHTML = selectedApps[currentIndex];
 }
 
-document.getElementById("saveAppDate").onclick = function () {
+async function getId() {
+  const token = await window.electronAPI.getToken();
+  const userIdResult = await window.electronAPI.getUserId({ token: token });
+  return userIdResult;
+}
+
+
+document.getElementById("saveAppDate").onclick = async  function () {
   const inputDate = document.getElementById("inputDate").value;
   const inputTime = document.getElementById("inputTime").value;
   if (!inputDate) {
@@ -148,10 +155,12 @@ document.getElementById("saveAppDate").onclick = function () {
   } else {
     console.log(appDates);
     document.getElementById("myModal").style.display = "none";
-
+    const userIdResult = await getId();
     window.electronAPI.sendSelectedApps({
       apps: selectedApps,
-      apps_exe: selectedAppsExe
+      apps_exe: selectedAppsExe,
+      app_dates: appDates,
+      user_id: userIdResult.user_id
     });
   }
 };
