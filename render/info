@@ -1,3 +1,0 @@
-Frontend: HTML, CSS, JS
-index.html - výchozí stránka
-render.js bude komunikovat s preload.js a poskytne API pro renderovací proces

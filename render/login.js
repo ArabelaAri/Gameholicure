@@ -6,8 +6,7 @@ async function checkTokenAndRedirect() {
     const token = await window.electronAPI.getToken();
     const userIdResult = await window.electronAPI.getUserId({ token: token });
     if (userIdResult.success) {
-      console.log("Uživatel již je přihlášen, přesměrování na domovskou stránku.", userIdResult.user_id);
-      changePage("render/select-apps.html");
+      changePage("render/home-page.html");
     }
 }
 

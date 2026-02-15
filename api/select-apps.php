@@ -60,11 +60,7 @@ for ($i = 0; $i < count($apps); $i++) {
   
 }
 echo json_encode(["success" => true]);
-/*$stmt = $conn->prepare("SELECT COUNT(*) FROM App_usage_log WHERE name = ? AND exe_name = ?");
-$stmt->bind_param("ss", $data["name"], $data["exe_name"]);
-$stmt->execute();
-$stmt->bind_result($count);
-$stmt->fetch();*/
+
 
 
 

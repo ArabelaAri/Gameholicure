@@ -1,3 +1,4 @@
+
 function filterApps(apps) {
   const ignoredExact = [
     "Microsoft Update Health Tools",
@@ -162,6 +163,7 @@ document.getElementById("saveAppDate").onclick = async  function () {
       app_dates: appDates,
       user_id: userIdResult.user_id
     });
+    window.electronAPI.loadPage("render/home-page.html");
   }
 };
 

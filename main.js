@@ -4,7 +4,11 @@ const { app, BrowserWindow, ipcMain } = require("electron");
 const fs = require("fs");
 const Store = require("electron-store").default;
 const store = new Store();
+const psList = require('ps-list');
+const { get } = require("http");
+const { time } = require("console");
 let win;
+
 
 function createWindow() {
   win = new BrowserWindow({
@@ -132,14 +136,20 @@ ipcMain.handle("set-user-id", (_, id) => {
   store.set("user_id", id);
 });
 
+//for render
 ipcMain.handle("get-user-id", async (event, data) => {
+  return getUserId(data.token);
+})
+//for main usage
+async function getUserId() {
+  const token = store.get("token");
   try {
     const response = await fetch("https://student.sspbrno.cz/~kozinova.adela/GAMEHOLICURE/set-token-id.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ token: data.token })
+      body: JSON.stringify({ token: token })
     });
 
     const result = await response.json();
@@ -151,7 +161,7 @@ ipcMain.handle("get-user-id", async (event, data) => {
       message: "Chyba připojení k serveru"
     };
   }
-});
+};
 
 ipcMain.handle("send-selected-apps", async (event, data) => {
   try {
@@ -177,6 +187,64 @@ ipcMain.handle("send-selected-apps", async (event, data) => {
   }
 });
 
+//for render
+ipcMain.handle("get-statistics", async (event, id) => {
+  return getStatistics(id);
+});  
+//for main usage
+async function getStatistics(id) {
+  try {
+    const response = await fetch("https://student.sspbrno.cz/~kozinova.adela/GAMEHOLICURE/print-statistics.php", {  
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ user_id: id })
+    });
+
+    const result = await response.json();
+    return result;
+
+  } catch (err) {
+    return {
+      success: false,
+      message: "Chyba připojení k serveru"
+    };
+  }
+};
+
+async function checkRunningApps() {   
+    runningNames = [];
+    processes = [];
+    userIdResult = await getUserId();
+    statisticsResult = await getStatistics(userIdResult.user_id);
+    if (statisticsResult.success) {
+      processes = await psList();
+      runningNames = processes.map(p => p.name.toLowerCase());
+      for (const app of statisticsResult.appsUser) {
+        if (runningNames.includes(app.exe_name.toLowerCase())) {
+          const now = new Date();
+          var date = now.getDate();
+          var month = now.getMonth() + 1; // months are zero-indexed
+          var year = now.getFullYear();
+          var hours = now.getHours();
+          var minutes = now.getMinutes();
+          var seconds = now.getSeconds();
+
+          if (date < 10) { date = "0" + date;}
+          if (month < 10) { month = "0" + month;}
+          if (hours < 10) { hours = "0" + hours;}
+          if (minutes < 10) { minutes = "0" + minutes;}
+          if (seconds < 10) { seconds = "0" + seconds;}
+          var datetime = year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds;
+
+          console.log(app.name + " běží " + datetime);
+          app.last_opened = datetime;
+        }
+      };      
+    }
+}
+setInterval(checkRunningApps, 30000);
 
 
 
