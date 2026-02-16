@@ -44,8 +44,6 @@ btn.addEventListener("click", async () => {
     console.error("Nepodařilo se získat user_id:", userIdResult.message);
   }
     changePage("render/home-page.html");
-    //jen na testování přechodu na select-apps stránku
-    //changePage("render/select-apps.html");
   } else {
     status.textContent = result.message;
   }

@@ -164,14 +164,16 @@ async function getUserId() {
 };
 
 ipcMain.handle("send-selected-apps", async (event, data) => {
+  return sendSelectedApps(data);
+});
+
+async function sendSelectedApps(data) {
   try {
     const response = await fetch("https://student.sspbrno.cz/~kozinova.adela/GAMEHOLICURE/select-apps.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         apps: data.apps,
-        apps_exe: data.apps_exe,
-        app_dates: data.app_dates,
         user_id: data.user_id
       })
     });
@@ -185,7 +187,7 @@ ipcMain.handle("send-selected-apps", async (event, data) => {
       message: "Chyba připojení k serveru"
     };
   }
-});
+}
 
 //for render
 ipcMain.handle("get-statistics", async (event, id) => {
@@ -214,8 +216,8 @@ async function getStatistics(id) {
 };
 
 async function checkRunningApps() {   
-    runningNames = [];
-    processes = [];
+    let runningNames = processes = appsToUpdate = [];
+    let change = false;
     userIdResult = await getUserId();
     statisticsResult = await getStatistics(userIdResult.user_id);
     if (statisticsResult.success) {
@@ -223,13 +225,13 @@ async function checkRunningApps() {
       runningNames = processes.map(p => p.name.toLowerCase());
       for (const app of statisticsResult.appsUser) {
         if (runningNames.includes(app.exe_name.toLowerCase())) {
-          const now = new Date();
-          var date = now.getDate();
-          var month = now.getMonth() + 1; // months are zero-indexed
-          var year = now.getFullYear();
-          var hours = now.getHours();
-          var minutes = now.getMinutes();
-          var seconds = now.getSeconds();
+          let now = new Date();
+          let date = now.getDate();
+          let month = now.getMonth() + 1; // months are zero-indexed
+          let year = now.getFullYear();
+          let hours = now.getHours();
+          let minutes = now.getMinutes();
+          let seconds = now.getSeconds();
 
           if (date < 10) { date = "0" + date;}
           if (month < 10) { month = "0" + month;}
@@ -240,11 +242,16 @@ async function checkRunningApps() {
 
           console.log(app.name + " běží " + datetime);
           app.last_opened = datetime;
+          appsToUpdate.push(app);
+          change = true;
         }
       };      
     }
+    if (change) {
+      sendSelectedApps({ apps: appsToUpdate, user_id: userIdResult.user_id });
+    }
 }
-setInterval(checkRunningApps, 30000);
+setInterval(checkRunningApps, 60000);  
 
 
 

@@ -21,7 +21,10 @@ async function printStats() {
   for (appUser of statisticsResult.appsUser) {
     let timeToPrint = "";
     rawTime = appUser.time_since;
-
+    if (rawTime.years === 0 && rawTime.months === 0 && rawTime.days === 0 && rawTime.hours === 0 && rawTime.minutes === 0) {
+      timeToPrint = "Právě teď";
+    }
+    else {
     if (rawTime.years > 0) {
       timeToPrint += rawTime.years + (rawTime.years === 1 ? " rok " : rawTime.years <= 4 ? " roky " : " let ");
     }
@@ -41,14 +44,15 @@ async function printStats() {
     if (rawTime.minutes > 0) {
       timeToPrint += rawTime.minutes + (rawTime.minutes === 1 ? " minuta" : rawTime.minutes <= 4 ? " minuty" : " minut");
     }
+  }
 
-    appName = document.createElement("h2");
-    appName.textContent = appUser.name;
-    appsList.appendChild(appName);
-    appTime = document.createElement("p");
-    appTime.textContent = "Čas od posledního spuštění: " + timeToPrint;
-    appsList.appendChild(appTime);
-    
+  appName = document.createElement("h2");
+  appName.textContent = appUser.name;
+  appsList.appendChild(appName);
+  appTime = document.createElement("p");
+  appTime.textContent = "Čas od posledního spuštění: " + timeToPrint;
+  appsList.appendChild(appTime);  
   }
 }
 printStats();
+setInterval(printStats, 60000);
