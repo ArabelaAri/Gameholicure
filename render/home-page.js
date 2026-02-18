@@ -5,7 +5,6 @@ async function getId() {
   return userIdResult.user_id;
 }
 
-
 async function printStats() {
   const userId = await getId();
   const statisticsResult = await window.electronAPI.getStatistics(userId);
@@ -15,6 +14,10 @@ async function printStats() {
     return;
   }
 
+  const heading = document.getElementById("welcome-header"); 
+  const userInfo = await window.electronAPI.user({ user_id: userId, coins: 0 });
+  heading.innerHTML = "Vítejte na domovské stránce, " + userInfo.username + "!";
+ 
   const appsList = document.getElementById("statisticsContainer");
   appsList.innerHTML = ""; 
 

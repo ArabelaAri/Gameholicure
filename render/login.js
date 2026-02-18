@@ -10,7 +10,7 @@ async function checkTokenAndRedirect() {
     }
 }
 
-checkTokenAndRedirect();
+//checkTokenAndRedirect();
 const btn = document.getElementById("loginBtn");
 const status = document.getElementById("status");
 
