@@ -17,6 +17,12 @@ const menu = Menu.buildFromTemplate([
     }
   },
   {
+    label: "Denní questy",
+    click () {
+      checkTokenAndRedirect("render/daily-quests.html");
+    }
+  },
+  {
     label : 'Historie',
     click() {
       checkTokenAndRedirect("render/history.html");
@@ -271,6 +277,9 @@ function getCurrentDateTime() {
   if (seconds < 10) { seconds = "0" + seconds;}
   return year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds;
 }
+ipcMain.handle("get-current-date-time", (event) => {
+  return getCurrentDateTime();
+});
 
 var stillRunning = [];
 let saveToHistory = "";
@@ -292,6 +301,12 @@ function stillOpen(appsToUpdate, userIdResult) {
     }
   });
 }
+
+ipcMain.handle("save-to-history", async (event, historyText) => {
+  let history = store.get("history") || [];
+  history.unshift(historyText);
+  store.set("history", history);
+})
 
 ipcMain.handle("print-history", async (event) => {
   const history = store.get("history");
