@@ -7,6 +7,7 @@ const store = new Store();
 const psList = require('ps-list');
 const { get } = require("http");
 const { time } = require("console");
+const { dialog } = require("electron");
 let win;
 
 const menu = Menu.buildFromTemplate([
@@ -26,6 +27,12 @@ const menu = Menu.buildFromTemplate([
     label : 'Historie',
     click() {
       checkTokenAndRedirect("render/history.html");
+    }
+  },
+  {
+    label : 'Účet',
+    click() {
+      checkTokenAndRedirect("render/user.html");
     }
   },
   {
@@ -67,7 +74,6 @@ function createWindow() {
   });
   win.setMenu(menu)
 
-  /*win.removeMenu(); mnau*/
   win.loadFile(path.join(__dirname, "render", "login.html"));
   win.webContents.openDevTools({ mode: "detach" });
   
@@ -313,9 +319,10 @@ ipcMain.handle("print-history", async (event) => {
   return history;
 });
 
-
 async function checkRunningApps() {   
-    let runningNames = processes = appsToUpdate = [];
+    let runningNames = [];
+    let processes = [];
+    let appsToUpdate = [];
     let change = false;
     userIdResult = await getUserId();
     statisticsResult = await getStatistics(userIdResult.user_id);
@@ -344,6 +351,14 @@ async function checkTokenAndRedirect(page) {
     if (userIdResult.success) {
       win.loadFile(page);
     }
+    else {
+      dialog.showMessageBox(win, {
+        type: "info",
+        title: "Upozornění",
+        message: "Nejdřív se prosím přihlašte."
+      })
+      win.loadFile("render/login.html");
+    }
 }
 
 ipcMain.handle("user", async (event, data) => {
@@ -370,6 +385,13 @@ async function user(data) {
     };
   }
 }
+
+ipcMain.handle("log-out", async (event) => {
+  store.clear();
+  win.loadFile("render/login.html");
+})
+
+
 
 
 

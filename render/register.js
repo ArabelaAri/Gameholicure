@@ -29,6 +29,7 @@ btn.addEventListener("click", async () => {
 
   if (result.success) {
     status.textContent = "Registrace byla úspěšná";
+    await window.electronAPI.loadPage("render/login.html");
   } else {
     status.textContent = result.message;
   }

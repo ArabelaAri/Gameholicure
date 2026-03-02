@@ -1,0 +1,14 @@
+body {
+    background: radial-gradient(circle, rgb(249, 255, 159) 0%, rgb(201, 248, 174) 100%);
+    font-family: "Baloo Tamma 2", system-ui;  
+}
+
+h1 {
+    font-weight: 600
+}
+h2 {
+    font-weight: 500
+}
+
+
+

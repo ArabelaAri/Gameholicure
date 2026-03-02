@@ -168,7 +168,6 @@ document.getElementById("saveAppDate").onclick = async  function () {
   if (currentIndex < appsUser.length) {
     showModal(); 
   } else {
-    console.log(appsUser);
     document.getElementById("myModal").style.display = "none";
     const userIdResult = await getId();
     window.electronAPI.sendSelectedApps({

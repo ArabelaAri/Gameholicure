@@ -16,6 +16,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
   printHistory: () => ipcRenderer.invoke("print-history"),
   saveToHistory: (historyText) => ipcRenderer.invoke("save-to-history", historyText),
   getCurrentDateTime: () => ipcRenderer.invoke("get-current-date-time"),
+  logOut: () => ipcRenderer.invoke("log-out")
 });
 
 

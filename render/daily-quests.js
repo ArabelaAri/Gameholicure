@@ -229,7 +229,7 @@ function openQuestModal(id) {
     btn.onclick = () => selectOption(id, option.coins, textHistory);
     box.appendChild(btn);
   });
-  modal.hidden = false;
+  modal.style.display = "block";
 }
 
 async function selectOption(id, coins, textHistory) {
@@ -246,7 +246,7 @@ async function selectOption(id, coins, textHistory) {
 
 
 function closeModal() {
-  document.getElementById("questModal").hidden = true;
+  document.getElementById("questModal").style.display = "none";
 }
 
 
