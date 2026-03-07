@@ -17,6 +17,18 @@ const menu = Menu.buildFromTemplate([
       checkTokenAndRedirect("render/home-page.html");
     }
   },
+    {
+    label : 'Svět',
+    click() {
+      checkTokenAndRedirect("render/world.html");
+    }
+  },
+  {
+    label : 'Předměty a obchod',
+    click() {
+      checkTokenAndRedirect("render/shop.html");
+    }
+  },
   {
     label: "Denní questy",
     click () {
@@ -391,7 +403,29 @@ ipcMain.handle("log-out", async (event) => {
   win.loadFile("render/login.html");
 })
 
+async function getItems(id) {
+  try {
+    const response = await fetch("https://student.sspbrno.cz/~kozinova.adela/GAMEHOLICURE/items.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ user_id: id.user_id})
+    });
 
+    const result = await response.json();
+    return result;
+
+  } catch (err) {
+    return {
+      success: false,
+      message: "Chyba připojení k serveru"
+    };
+  }
+}
+ipcMain.handle("get-items", async (event, id) => {
+  return getItems(id);
+});
 
 
 
