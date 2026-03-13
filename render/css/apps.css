@@ -1,42 +1,43 @@
-@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
 
-* {
-	box-sizing: border-box;
+.card {
+  width: 80%;
+  height: 150px;
+  margin: 1rem auto;
+  perspective: 1000px;
+  cursor: pointer;
 }
 
-body {
-	justify-content: center;
-	align-items: center;
-	min-height: 100vh;
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
 }
 
-.main-container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	min-height: 100vh;
-	padding: 2rem;
+.card:hover .card-inner {
+  transform: rotateY(180deg);
 }
 
-#apps-container {
-	margin-left: 10%;
-    margin-right: 10%;
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
 }
 
-.app-card {
-	margin: 1.5rem 0;
-	padding: 1.8rem;
-	box-shadow: 0.1rem 0.1rem 1.5rem rgba(0, 0, 0, 0.2);
-	border-radius: 0.4rem;
-	background-color: white;
+.card-front, .card-back {
+  background: white;
+  border: 1px solid #e5e7eb;
 }
 
-.app-card h2 {
-	margin: 0 0 0.5rem 0;
+.card-back {
+  transform: rotateY(180deg);
 }
 
-.app-card p {
-	margin: 0;
-	line-height: 1.6;
-}
+/*https://prismic.io/blog/css-hover-effects#6-doublesided-card*/

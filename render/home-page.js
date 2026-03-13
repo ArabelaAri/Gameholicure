@@ -53,7 +53,14 @@ async function printStats() {
     }
 
     let card = document.createElement("div");
-    card.classList.add("app-card");
+    let cardI = document.createElement("div");
+    let cardF = document.createElement("div");
+    let cardB = document.createElement("div");
+    //card.classList.add("app-card");
+    card.classList.add("card");
+    cardI.classList.add("card-inner");
+    cardF.classList.add("card-front");
+    cardB.classList.add("card-back");
 
     let appName = document.createElement("h2");
     appName.textContent = appUser.name;
@@ -61,9 +68,13 @@ async function printStats() {
     let appTime = document.createElement("p");
     appTime.textContent = "Čas od posledního spuštění: " + timeToPrint;
 
-    card.appendChild(appName);
-    card.appendChild(appTime);
-
+    //card.appendChild(appName);
+    cardF.appendChild(appName);
+    //card.appendChild(appTime);
+    cardB.appendChild(appTime);
+    cardI.appendChild(cardF);
+    cardI.appendChild(cardB);
+    card.appendChild(cardI);
     appsList.appendChild(card);
   }
 }

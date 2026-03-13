@@ -18,6 +18,12 @@ const menu = Menu.buildFromTemplate([
     }
   },
     {
+    label: "Denní questy",
+    click () {
+      checkTokenAndRedirect("render/daily-quests.html");
+    }
+  },
+    {
     label : 'Svět',
     click() {
       checkTokenAndRedirect("render/world.html");
@@ -27,12 +33,6 @@ const menu = Menu.buildFromTemplate([
     label : 'Předměty a obchod',
     click() {
       checkTokenAndRedirect("render/shop.html");
-    }
-  },
-  {
-    label: "Denní questy",
-    click () {
-      checkTokenAndRedirect("render/daily-quests.html");
     }
   },
   {
@@ -46,18 +46,6 @@ const menu = Menu.buildFromTemplate([
     click() {
       checkTokenAndRedirect("render/user.html");
     }
-  },
-  {
-    label: 'Editovat',
-    submenu: [
-      { role: 'undo', label: 'Zpět' },
-      { role: 'redo', label: 'Znovu' },
-      { type: 'separator' },
-      { role: 'cut', label: 'Vyjmout' },
-      { role: 'copy', label: 'Kopírovat' },
-      { role: 'paste', label: 'Vložit' },
-      
-    ]
   },
   {
     label: 'Okno',
@@ -427,5 +415,27 @@ ipcMain.handle("get-items", async (event, id) => {
   return getItems(id);
 });
 
+async function getItemsShop() {
+  try {
+    const response = await fetch("https://student.sspbrno.cz/~kozinova.adela/GAMEHOLICURE/shopItems.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+    });
+
+    const result = await response.json();
+    return result;
+
+  } catch (err) {
+    return {
+      success: false,
+      message: "Chyba připojení k serveru"
+    };
+  }
+}
+ipcMain.handle("get-items-shop", async (event) => {
+  return getItemsShop();
+});
 
 

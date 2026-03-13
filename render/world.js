@@ -6,7 +6,6 @@ async function getId() {
 async function print() {
     const userId = await getId();
     const toPrint = await window.electronAPI.getItems({ user_id: userId});
-    console.log(toPrint);
     const background = document.getElementById("background");  
     const character = document.getElementById("character");  
     let url;

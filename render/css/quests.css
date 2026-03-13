@@ -1,0 +1,58 @@
+.quest {
+  list-style: none;
+  padding: 10px 10px 10px 40px;
+  margin: 6px 0;
+  border-radius: 14px;
+  position: relative;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.quest::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+}
+
+.quest:hover {
+  background: #ffffff;
+}
+
+.quests{
+  padding-left: 10px;
+  margin-bottom: 10px;
+}
+
+.sector-header h2{
+  position: relative;
+  padding: 14px 18px 14px 42px;
+  margin: 10px 0;
+  border-radius: 14px;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.sector-header h2:hover{
+  background: #ebebeb;
+}
+
+#schoolHeader h2::before{
+  content: "🕮 ";
+}
+
+#workHeader h2::before{
+  content: "모 ";
+}
+
+#sportHeader h2::before{
+  content: "⚾︎ ";
+}
+
+#developmentHeader h2::before{
+  content: "⚛︎ ";
+}
+/*https://emojicombos.com/*/
