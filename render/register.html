@@ -4,21 +4,34 @@
   <meta charset="UTF-8">
   <title>Registrace &#9829</title>
   <link rel="stylesheet" href="css/general.css">
+  <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
-
-<h1>Registrace</h1>
-
-<input id="username" placeholder="Uživatelské jméno" />
-<br />
-<input id="pswd" type="password" placeholder="Heslo" />
-<br />
-<input id="email" placeholder="Email" />
-<br />
-<button id="registerBtn">Registrovat</button>
-<p id="status"></p>
-
-
+        <div class="white-box">
+            <div class="login-header">
+                <h1>Registrace</h1>
+            </div>
+            <form class="login-form" id="loginForm" novalidate>
+                <div class="form-group">
+                    <label for="username">Uživatelské jméno</label>
+                    <input type="text" id="username" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Heslo</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="pswd" required autocomplete="current-password">
+                        <button type="button" class="password-toggle" id="passwordToggle" aria-label="Toggle password visibility"></button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required autocomplete="email">
+                </div>
+                <button type="button" class="login-btn" id="registerBtn">
+                    <span class="btn-text">Registrovat se</span>
+                </button>
+            </form>
+        </div>
 <script src="register.js"></script>
 </body>
 </html>

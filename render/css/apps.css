@@ -1,6 +1,7 @@
 
 .card {
   width: 80%;
+  max-width: 700px;
   height: 150px;
   margin: 1rem auto;
   perspective: 1000px;
@@ -41,3 +42,14 @@
 }
 
 /*https://prismic.io/blog/css-hover-effects#6-doublesided-card*/
+
+.center {
+    background: #fff;
+    padding: 40px;
+    padding-bottom: 5px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+#saveAppsBtn {
+  margin-top: 10px;
+}

@@ -12,12 +12,12 @@ btn.addEventListener("click", async () => {
   const pswd = document.getElementById("pswd").value;
 
   if (!username || !email || !pswd) {
-    status.textContent = "Prosím, vyplňte všechna pole";
+    alert("Prosím, vyplňte všechna pole");
     return;
   }
 
   if (!validateEmail(email)) {
-    status.textContent = "Neplatný formát emailu";
+    alert("Neplatný formát emailu");
     return;
   }
 
@@ -28,9 +28,8 @@ btn.addEventListener("click", async () => {
   });
 
   if (result.success) {
-    status.textContent = "Registrace byla úspěšná";
     await window.electronAPI.loadPage("render/login.html");
   } else {
-    status.textContent = result.message;
+  alert(result.message);
   }
 });

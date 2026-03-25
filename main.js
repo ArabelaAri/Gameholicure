@@ -391,14 +391,14 @@ ipcMain.handle("log-out", async (event) => {
   win.loadFile("render/login.html");
 })
 
-async function getItems(id) {
+async function userItems(data) {
   try {
     const response = await fetch("https://student.sspbrno.cz/~kozinova.adela/GAMEHOLICURE/items.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ user_id: id.user_id})
+      body: JSON.stringify({ user_id: data.user_id, item_to_update: data.item_to_update})
     });
 
     const result = await response.json();
@@ -411,8 +411,8 @@ async function getItems(id) {
     };
   }
 }
-ipcMain.handle("get-items", async (event, id) => {
-  return getItems(id);
+ipcMain.handle("user-items", async (event, data) => {
+  return userItems(data);
 });
 
 async function getItemsShop() {

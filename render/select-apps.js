@@ -78,6 +78,7 @@ async function getInstalledApps() {
     const appToSelect = document.createElement('input');
     appToSelect.type = 'checkbox';
     appToSelect.id = apps[i].name; 
+    appToSelect.classList.add("checkbox-effect-2");
     appToSelect.name = apps[i].name;
     appToSelect.value = apps[i].name;
     list.appendChild(appToSelect);

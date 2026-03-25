@@ -5,6 +5,8 @@
 
 #background {
     width: 100%;
+    max-width: 1560px;
+    height: auto;
     display: block;
 }
 
@@ -22,7 +24,7 @@
 }
 
 #animal {
-    left: 50%;
+    left: 60%;
     bottom: 20px;         
     z-index: 3;           
 }

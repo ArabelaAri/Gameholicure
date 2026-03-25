@@ -13,12 +13,25 @@
   height: 100%;
   z-index: 1010101010
 }
-#zoom {
-    width: 90%;
-}
 #zoom-cointainer {
     position: fixed;
-    width: 35%;
+    width: 220px;
+}
+#zoom-image{
+    height: 290px;
+    background-color: white;
+    border-radius: 12px;
+    border: 2px solid #ddd;  
+    position: relative;
+}
+#zoom-image img {
+    padding: 10px;
+    min-width: 160px;
+    max-width: 90%;
+    height: auto;
+    max-height: 270px;
+    position: absolute;
+    bottom: 0;
 }
 
 #characters, #animals, #backgound {
@@ -49,4 +62,26 @@
     max-width: 90%;
     max-height: 90%;
     object-fit: contain;
+}
+
+.next-to {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    position: relative;
+}
+.next-to h3,
+.next-to p {
+    margin: 5px;
+}
+#item-to-buy {
+    width: auto;
+    height: 95px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.modal-content {
+    width: 300px;
 }

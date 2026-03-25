@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <title>Výběr aplikací &#9829</title>
-  <link rel="stylesheet" href="css/modal.css">
   <link rel="stylesheet" href="css/general.css">
+  <link rel="stylesheet" href="css/apps.css">
 </head>
 <body>
 <h1>Vyberte aplikace, které se budou sledovat</h1>
-<div id="appsContainer">
+<div class="center">
+    <div id="appsContainer">
+    </div>
+  <button id="saveAppsBtn">Pokračovat</button>
 </div>
-<button id="saveAppsBtn">Pokračovat</button>
-
 <div id="myModal" class="modal">
   <div class="modal-content">
     <h2>Prosím zadejte poslední čas spuštění aplikace: </h2>
@@ -23,7 +24,6 @@
     <button id="saveAppDate">Pokračovat</button>
     <button id="stepBack">Zpět</button>
   </div>
-
 </div>
 
 <script src="select-apps.js"></script>
