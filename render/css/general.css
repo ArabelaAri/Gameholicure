@@ -51,9 +51,9 @@ h2 {
 .checkbox-effect-2:checked + label:before {
   content: "";
   display: inline-block;
-  width: 12px;
-  height: 12px;
-  border: 2px solid #999; /* replace with your color */
+  width: 14px;
+  height: 14px;
+  border: 2px solid #2c4d30; 
   box-sizing: border-box;
   border-radius: 50%;
   margin-right: 10px;
@@ -64,11 +64,11 @@ h2 {
 .checkbox-effect-2:not(:checked) + label:after,
 .checkbox-effect-2:checked + label:after {
   content: "✔"; 
-  font-size: 14px;
+  font-size: 17px;
   position: absolute;
   left: 0;
   top: 0;
-  color: #000000;
+  color: #2c4d30;;
   opacity: 0;
   transition: 0.2s;
 }
@@ -95,6 +95,10 @@ label {
   padding-left: 20px;
 }
 
+.checkbox-effect-2 + label {
+  font-size: 17px;
+}
+
 .checkbox-effect-2 + label:before,
 .checkbox-effect-2 + label:after {
   position: absolute;
@@ -115,14 +119,14 @@ button {
     margin: 5px;
     border: none;
     border-radius: 12px;
-    background: rgb(71, 133, 35) 100%;
+    background: #3b6841;
     color: white;
     font-weight: bold;
     cursor: pointer;
 }
 
 button:hover {
-    background: rgb(49, 92, 24) 100%;
+    background: #2c4d30;
 }
 
 .center {

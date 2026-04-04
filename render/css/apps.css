@@ -1,55 +1,66 @@
 
-.card {
-  width: 80%;
-  max-width: 700px;
-  height: 150px;
-  margin: 1rem auto;
-  perspective: 1000px;
-  cursor: pointer;
-}
-
-.card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-}
-
-.card:hover .card-inner {
-  transform: rotateY(180deg);
-}
-
-.card-front,
-.card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0.5rem;
-}
-
-.card-front, .card-back {
-  background: white;
-  border: 1px solid #e5e7eb;
-}
-
-.card-back {
-  transform: rotateY(180deg);
-}
-
-/*https://prismic.io/blog/css-hover-effects#6-doublesided-card*/
-
-.center {
-    background: #fff;
-    padding: 40px;
-    padding-bottom: 5px;
+#apps-container {
+    margin: auto;
+    width: 80%;
+    max-width: 800px;
+    padding: 10px;
     border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 }
-#saveAppsBtn {
-  margin-top: 10px;
+
+.stat-block {
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  margin-bottom: 20px;
 }
+
+.stat-block h2 {
+  margin-bottom: 5px;
+}
+
+.stat-block p {
+  color: #aaa;
+  margin-bottom: 15px;
+}
+
+
+.bar-wrapper {
+  margin-bottom: 10px;
+}
+
+.bar-wrapper span {
+  display: block;
+  margin-bottom: 3px;
+  font-size: 14px;
+}
+
+
+.bar {
+  width: 100%;
+  height: 8px;
+  background: rgb(201, 248, 174) 100%;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  content: "";
+  transition: .7s;
+  height: 100%;
+  animation: animate 3s ease-out;
+}
+
+.bar-wrapper:nth-child(2) .bar-fill { background: #7e463d; } 
+.bar-wrapper:nth-child(3) .bar-fill { background: #3b6841; }  
+.bar-wrapper:nth-child(4) .bar-fill { background: #89b83b; }  
+.bar-wrapper:nth-child(5) .bar-fill { background: #7d2b83; } 
+.bar-wrapper:nth-child(6) .bar-fill { background: #d143bd }  
+
+@keyframes animate {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/*https://imagecolorpicker.com*/
+

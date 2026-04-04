@@ -52,30 +52,53 @@ async function printStats() {
       }
     }
 
-    let card = document.createElement("div");
-    let cardI = document.createElement("div");
-    let cardF = document.createElement("div");
-    let cardB = document.createElement("div");
-    //card.classList.add("app-card");
-    card.classList.add("card");
-    cardI.classList.add("card-inner");
-    cardF.classList.add("card-front");
-    cardB.classList.add("card-back");
+    let container = document.createElement("div");
+    container.classList.add("stat-block");
 
-    let appName = document.createElement("h2");
-    appName.textContent = appUser.name;
+    let name = document.createElement("h2");
+    name.textContent = appUser.name;
 
-    let appTime = document.createElement("p");
-    appTime.textContent = "Čas od posledního spuštění: " + timeToPrint;
+    let time = document.createElement("p");
+    time.textContent = "Čas od posledního spuštění: " + timeToPrint;
+    
+  function createBar(label, value, max) {
+    let wrapper = document.createElement("div");
+    wrapper.classList.add("bar-wrapper");
 
-    //card.appendChild(appName);
-    cardF.appendChild(appName);
-    //card.appendChild(appTime);
-    cardB.appendChild(appTime);
-    cardI.appendChild(cardF);
-    cardI.appendChild(cardB);
-    card.appendChild(cardI);
-    appsList.appendChild(card);
+    let title = document.createElement("span");
+    title.textContent = label + ": " + value;
+
+    let bar = document.createElement("div");
+    bar.classList.add("bar");
+
+    let fill = document.createElement("div");
+    fill.classList.add("bar-fill");
+
+    let percent = Math.min((value / max) * 100, 100);
+    fill.style.maxWidth = percent + "%";
+
+    bar.appendChild(fill);
+    wrapper.appendChild(title);
+    wrapper.appendChild(bar);
+
+    return wrapper;
+    }
+      // 🔥 všechny osy
+    let yearsBar = createBar("Roky", rawTime.years, 10);
+    let monthsBar = createBar("Měsíce", rawTime.months, 12);
+    let daysBar = createBar("Dny", rawTime.days, 31);
+    let hoursBar = createBar("Hodiny", rawTime.hours, 24);
+    let minutesBar = createBar("Minuty", rawTime.minutes, 60);
+
+    //container.appendChild(name);
+    container.appendChild(time);
+    container.appendChild(yearsBar);
+    container.appendChild(monthsBar); 
+    container.appendChild(daysBar);
+    container.appendChild(hoursBar);  
+    container.appendChild(minutesBar);
+
+    appsList.appendChild(container);
   }
 }
 printStats();

@@ -1,0 +1,22 @@
+#save-apps-btn {
+  margin-top: 30px;
+  width: 100%;
+}
+
+#box {
+    margin: auto;
+    background: #fff;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 12px;
+    width: 320px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+#box h1 {
+    top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}

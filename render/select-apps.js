@@ -73,7 +73,7 @@ async function getInstalledApps() {
   apps = await window.electronAPI.getInstalledApps();
   apps = filterApps(apps);
   console.log(apps);
-  let list = document.getElementById("appsContainer");
+  let list = document.getElementById("apps-container");
   for (i = 0; i < apps.length; ++i) {
     const appToSelect = document.createElement('input');
     appToSelect.type = 'checkbox';
@@ -99,7 +99,7 @@ let appsUser = [];
 async function sendApps() {
   appsUser = [];
   currentIndex = 0;
-  const checkboxes = document.querySelectorAll('#appsContainer input[type="checkbox"]');
+  const checkboxes = document.querySelectorAll('#apps-container input[type="checkbox"]');
   checkboxes.forEach(checkbox => {
     if (checkbox.checked) {
       const app = apps.find(a => a.name === checkbox.value);
@@ -121,7 +121,7 @@ async function sendApps() {
   showModal();
 }
 
-var el = document.getElementById("saveAppsBtn");
+var el = document.getElementById("save-apps-btn");
 if (el.addEventListener) {
   el.addEventListener("click", async () => sendApps()); 
 }
