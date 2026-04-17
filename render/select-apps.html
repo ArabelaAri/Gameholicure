@@ -4,13 +4,14 @@
   <meta charset="UTF-8">
   <title>Výběr aplikací &#9829</title>
   <link rel="stylesheet" href="css/general.css">
-  <link rel="stylesheet" href="css/selection.css">
+  <link rel="stylesheet" href="css/select-apps.css">
 </head>
 <body>
 <p>Zde si vyberte aplikace, které se budou sledovat. Výběr budete moci upravovat kdykoli později v nastavení účtu.</p>
 <div id="box">
     <h1>Vaše aplikace</h1>
     <div id="apps-container">
+      <div class="loader"></div>
     </div>
     <button id="save-apps-btn">Pokračovat</button>
 </div>
@@ -20,7 +21,7 @@
     <h3 id="appName"></h3>
     <label for="inputDate">Datum posledního spuštění:</label>
     <input type="date" id="inputDate" name="inputDate"><br><br>
-    <label for="inputTime">Vyberte čas v hodinách a minutách(volitelné):</label>
+    <label for="inputTime">Vyberte čas v hodinách a minutách (volitelné):</label>
     <input type="time" id="inputTime" name="inputTime"><br><br>
     <button id="saveAppDate">Pokračovat</button>
     <button id="stepBack">Zpět</button>

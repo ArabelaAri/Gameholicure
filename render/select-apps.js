@@ -66,13 +66,21 @@ function isFutureDate(dateStr) {
   const inputDate = new Date(dateStr);
   return inputDate > today;
 }
+function isFutureTime(dateStr, timeStr) {
+  const now = new Date();
+  const inputDateTime = new Date(dateStr + "T" + timeStr);
+  return inputDateTime > now;
+}
 
 apps = [];
 
 async function getInstalledApps() {
   apps = await window.electronAPI.getInstalledApps();
   apps = filterApps(apps);
-  console.log(apps);
+  let loader = document.querySelector(".loader");
+  if (loader) {
+    loader.remove();
+  }
   let list = document.getElementById("apps-container");
   for (i = 0; i < apps.length; ++i) {
     const appToSelect = document.createElement('input');
@@ -157,6 +165,10 @@ document.getElementById("saveAppDate").onclick = async  function () {
     return;
   }   
   if (inputTime) {
+      if (isFutureTime(inputDate, inputTime)) {
+        alert("Prosím, vyberte čas, který není v budoucnosti.");
+        return;
+      }
     appsUser[currentIndex].last_opened = inputDate + " " + inputTime + ":00";
     document.getElementById("inputTime").value = "";
   } else {

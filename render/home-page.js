@@ -61,45 +61,54 @@ async function printStats() {
     let time = document.createElement("p");
     time.textContent = "Čas od posledního spuštění: " + timeToPrint;
     
-  function createBar(label, value, max) {
-    let wrapper = document.createElement("div");
-    wrapper.classList.add("bar-wrapper");
+    function createBar(label, className, value, max) {
+      let wrapper = document.createElement("div");
+      wrapper.classList.add("bar-wrapper");
 
-    let title = document.createElement("span");
-    title.textContent = label + ": " + value;
+      let title = document.createElement("span");
+      title.textContent = label + ": " + value;
 
-    let bar = document.createElement("div");
-    bar.classList.add("bar");
+      let bar = document.createElement("div");
+      bar.classList.add("bar");
 
-    let fill = document.createElement("div");
-    fill.classList.add("bar-fill");
+      let fill = document.createElement("div");
+      fill.classList.add("bar-fill");
+      fill.classList.add("bar-" + className);
 
-    let percent = Math.min((value / max) * 100, 100);
-    fill.style.maxWidth = percent + "%";
+      let percent = Math.min((value / max) * 100, 100);
+      fill.style.maxWidth = percent + "%";
 
-    bar.appendChild(fill);
-    wrapper.appendChild(title);
-    wrapper.appendChild(bar);
+      bar.appendChild(fill);
+      wrapper.appendChild(title);
+      wrapper.appendChild(bar);
 
-    return wrapper;
+      return wrapper;
     }
-      // 🔥 všechny osy
-    let yearsBar = createBar("Roky", rawTime.years, 10);
-    let monthsBar = createBar("Měsíce", rawTime.months, 12);
-    let daysBar = createBar("Dny", rawTime.days, 31);
-    let hoursBar = createBar("Hodiny", rawTime.hours, 24);
-    let minutesBar = createBar("Minuty", rawTime.minutes, 60);
-
-    //container.appendChild(name);
+    container.appendChild(name);
     container.appendChild(time);
-    container.appendChild(yearsBar);
-    container.appendChild(monthsBar); 
-    container.appendChild(daysBar);
-    container.appendChild(hoursBar);  
-    container.appendChild(minutesBar);
 
+    if (rawTime.years > 0) {
+      let yearsBar = createBar("Roky", "years",rawTime.years, 10);
+      container.appendChild(yearsBar);
+    }
+    if (rawTime.months > 0) {
+      let monthsBar = createBar("Měsíce", "months",rawTime.months, 12);
+      container.appendChild(monthsBar);
+    }
+    if (rawTime.days > 0) {
+      let daysBar = createBar("Dny", "days",rawTime.days, 31);
+      container.appendChild(daysBar);
+    }
+    if (rawTime.hours > 0) {
+      let hoursBar = createBar("Hodiny", "hours",rawTime.hours, 24);
+      container.appendChild(hoursBar);
+    }
+    if (rawTime.minutes > 0) {
+      let minutesBar = createBar("Minuty", "minutes",rawTime.minutes, 60);
+      container.appendChild(minutesBar);
+    }
     appsList.appendChild(container);
   }
 }
 printStats();
-setInterval(printStats, 60000);
+setInterval(printStats, 30000);

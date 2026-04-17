@@ -121,7 +121,8 @@ buy.onclick = async function () {
             coins = 0 - Item.price;
             const update = window.electronAPI.userItems({ user_id: userId, item_to_update : Item});
             await window.electronAPI.user({ user_id: userId, coins: coins });
-            alert("Předmět je Váš!! :)")
+            alert("Předmět je Váš!! :)");
+            location.reload();
         }
     }
 }

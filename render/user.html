@@ -8,22 +8,21 @@
 </head>
 <body>
     <p>Zde můžete vidět informace o Vašem účtu.</p>
-    <div class="center">
-    <div id="profile-pic-wrapper">
-        <img id="profile-pic">
-    </div>
-    <div class="user-elements">
-        <h1>Účet: </h1>
-        <h1 id="username"></h1>
-    </div>
-    <div class="user-elements">
-        <h2>Email: </h2><p id="email"></p>
-    </div>
-    <div class="user-elements">
-        <h2>Počet coinů: </h2><p id="coins"></p>
-    </div>
-    <button type = "button" onclick="addApps()">Přidat aplikace</button>
-    <button type = "button" onclick="logOut()">Odhlásit se</button>
+    <div class="user-container">
+        <div class="user-elements">
+        <h2 id="username"></h2>
+        </div>
+        <div id="profile-pic-wrapper">
+            <img id="profile-pic">
+        </div>
+        <div class="user-elements">
+            <h3>Email: </h3><p id="email"></p>
+        </div>
+        <div class="user-elements">
+            <h3>Počet coinů: </h3><p id="coins"></p>
+        </div>
+        <button type = "button" onclick="addApps()">Přidat aplikace</button>
+        <button type = "button" onclick="logOut()">Odhlásit se</button>
     </div>
 <script src="user.js"></script>
 </body>
