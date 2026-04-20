@@ -10,6 +10,10 @@ const { time } = require("console");
 const { dialog } = require("electron");
 let win;
 
+if(require("electron-squirrel-startup")) {
+  app.quit();
+}
+
 const menu = Menu.buildFromTemplate([
   {
     label : 'Domů',
@@ -75,7 +79,7 @@ function createWindow() {
   win.setMenu(menu)
 
   win.loadFile(path.join(__dirname, "render", "login.html"));
-  win.webContents.openDevTools({ mode: "detach" });
+  //win.webContents.openDevTools({ mode: "detach" });
   
   ipcMain.on("load-page", (event, page) => {
     win.loadFile(page);

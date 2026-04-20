@@ -37,3 +37,7 @@
     100% {background-size:120%}
 }
 /*https://css-loaders.com/progress/#l4*/
+
+#apps-container {
+    overflow: scroll;
+}

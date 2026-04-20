@@ -22,7 +22,10 @@ btn.addEventListener("click", async () => {
     pswd
   });
 
-
+  if (!result.success) {
+    alert("Neplatné přihlašovací údaje. Zkuste to znovu.");
+    return;
+  }
     //store token
   await window.electronAPI.setToken(result.token);
 
