@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Denní questy &#9829</title>
+  <link rel="stylesheet" href="css/general.css">
+  <link rel="stylesheet" href="css/quests.css">
+</head>
+<body>
+
+<h1>Denní questy</h1>
+<div class="center">
+<div id="questsSectors">
+
+  <div class="sector">
+    <div id="schoolHeader" class="sector-header">
+    <h2>Škola</h2>
+    </div>
+    <div class="quests" hidden>
+      <ul>
+        <li class="quest" data-id="learning">Učení</li>
+        <li class="quest" data-id="assignment">Udělat úkol vlastní vůlí x dní před odevzdáním</li>
+        <li class="quest" data-id="noskip">Neskipování školy</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sector">
+    <div id="workHeader" class="sector-header">
+    <h2>Práce</h2>
+    </div>
+    <div class="quests" hidden>
+      <ul>
+        <li class="quest" data-id="addWork">Práce navíc bez odměny</li>
+        <li class="quest" data-id="helpColleague">Pomoc kolegovi v nesnázích</li>
+        <li class="quest" data-id="completeTask">Dokončení tasku před deadlinem</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sector">
+    <div id="sportHeader" class="sector-header">
+    <h2>Sport</h2>
+    </div>
+    <div class="quests" hidden>
+      <ul>
+        <li class="quest" data-id="yoga">Jóga</li>
+        <li class="quest" data-id="pilates">Pilates</li>
+        <li class="quest" data-id="running">Běh venku</li>
+        <li class="quest" data-id="walking">Procházka</li>
+        <li class="quest" data-id="gym">Posilovna</li>
+        <li class="quest" data-id="homeWorkout">Posilování doma</li>
+        <li class="quest" data-id="swimming">Plavání</li>
+        <li class="quest" data-id="hiit">HIIT trénink</li>
+        <li class="quest" data-id="climbing">Lezení</li>
+        <li class="quest" data-id="dance">Tanec</li>
+        <li class="quest" data-id="skating">Bruslení</li>
+        <li class="quest" data-id="cycling">Cyklistika</li>
+        <li class="quest" data-id="climbing">Lezení (stěna/skála)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sector">
+    <div id="developmentHeader" class="sector-header">
+    <h2>Rozvoj a mentální hygiena</h2>
+    </div>
+    <div class="quests" hidden>
+      <ul>
+        <li class="quest" data-id="reading">Čtení</li>
+        <li class="quest" data-id="drawing">Malování/kreslení</li>
+        <li class="quest" data-id="meditation">Meditace</li>
+        <li class="quest" data-id="personalProject">Osobní projekt</li>
+        <li class="quest" data-id="noSocialMedia">Den bez sociálních sítí</li>
+        <li class="quest" data-id="sleep">Spánek 9+ hodin</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+<div id="questModal" class="modal">
+  <div class="modal-content">
+    <p id="modalMessage"></p>
+
+    <div id="optionsBox"></div>
+
+    <div id="confirmBox" hidden>
+      <p id="confirmText"></p>
+    </div>
+
+    <button id="closeModal" onclick="closeModal()">Zavřít</button>
+  </div>
+</div>
+</div>
+
+<script src="daily-quests.js"></script>
+
+</body>
+</html

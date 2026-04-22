@@ -1,0 +1,67 @@
+
+#apps-container {
+    margin: auto;
+    width: 80%;
+    max-width: 800px;
+    padding: 10px;
+    border-radius: 12px;
+}
+
+.stat-block {
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  margin-bottom: 20px;
+}
+
+.stat-block h2 {
+  margin-bottom: 5px;
+}
+
+.stat-block p {
+  margin-bottom: 15px;
+  color: #3b6841;
+}
+
+
+.bar-wrapper {
+  margin-bottom: 10px;
+}
+
+.bar-wrapper span {
+  display: block;
+  margin-bottom: 3px;
+  font-size: 14px;
+}
+
+
+.bar {
+  width: 100%;
+  height: 8px;
+  background: rgb(201, 248, 174) 100%;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  content: "";
+  transition: .7s;
+  height: 100%;
+  animation: animate 3s ease-out;
+}
+
+.bar-years { background: #7e463d; } 
+.bar-months { background: #3b6841; }  
+.bar-days { background: #89b83b; }  
+.bar-hours { background: #7d2b83; } 
+.bar-minutes { background: #d143bd } 
+/*https://imagecolorpicker.com*/ 
+
+@keyframes animate {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+
+

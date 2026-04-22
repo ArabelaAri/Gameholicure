@@ -9,7 +9,7 @@ if ($conn->connect_error) {
   exit;
 }
 
-$stmt = $conn->prepare( "SELECT * FROM Users WHERE username = ?");
+$stmt = $conn->prepare( "SELECT * FROM Users WHERE username = BINARY ?");
 $stmt->bind_param("s", $data["username"]);
 $stmt->execute();
 $result = $stmt->get_result();

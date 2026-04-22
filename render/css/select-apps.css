@@ -1,0 +1,43 @@
+#save-apps-btn {
+  margin-top: 30px;
+  width: 100%;
+}
+
+#box {
+    margin: auto;
+    background: #fff;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 12px;
+    width: 320px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+#box h1 {
+    top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.loader {
+  margin: auto;
+  margin-top: 10%;
+  width: 120px;
+  height: 20px;
+  -webkit-mask:linear-gradient(90deg,#000000 70%,#0000 0) 0/20%;
+  mask:linear-gradient(90deg,#000000 70%,#0000 0) 0/20%;
+  background:
+   linear-gradient(#3b6841) 0/0% no-repeat
+   #ddd;
+  animation: l4 2s infinite steps(6);
+}
+@keyframes l4 {
+    100% {background-size:120%}
+}
+/*https://css-loaders.com/progress/#l4*/
+
+#apps-container {
+    overflow: scroll;
+}

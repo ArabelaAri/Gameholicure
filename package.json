@@ -1,18 +1,30 @@
 {
   "name": "gameholicure",
   "version": "1.0.0",
-  "description": "",
+  "description": "Application that helps manage gaming time and increase productivity.",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "keywords": [],
-  "author": "",
+  "author": "ArabelaAri",
   "license": "ISC",
   "devDependencies": {
+    "@electron-forge/cli": "^7.11.1",
+    "@electron-forge/maker-deb": "^7.11.1",
+    "@electron-forge/maker-rpm": "^7.11.1",
+    "@electron-forge/maker-squirrel": "^7.11.1",
+    "@electron-forge/maker-zip": "^7.11.1",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.11.1",
+    "@electron-forge/plugin-fuses": "^7.11.1",
+    "@electron/fuses": "^1.8.0",
     "electron": "^38.1.2"
   },
   "dependencies": {
-    "electron-store": "^11.0.2"
+    "electron-squirrel-startup": "^1.0.1",
+    "electron-store": "^11.0.2",
+    "ps-list": "^7.2.0"
   }
 }

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Předměty a obchod &#9829</title>
+  <link rel="stylesheet" href="css/general.css">
+  <link rel="stylesheet" href="css/shop.css">
+</head>
+<body>
+  <div id="left">
+    <h2>Postavy</h2>
+    <div id="characters">
+    </div>
+    <h2>Mazlíčci</h2>
+    <div id="animals">
+    </div>
+    <h2>Pozadí</h2>
+    <div id="backgrounds">
+    </div>
+  </div>
+  <div id="right">
+    <div id="zoom-cointainer">
+      <h2>Náhled</h2>
+      <div id="zoom-image">
+        <img id="zoom">
+      </div>
+      <div class="next-to">
+        <h3>Stav:</h3><p id="is-owned"></p>
+      </div>
+      <div class="next-to">
+        <h3>Cena: </h3><p id="price"></p>
+      </div>
+      <button id="to-buy" hidden>Koupit</button>
+      <button id="to-select" hidden>Vybrat</button>
+    </div>
+    <div id="shop-modal" class="modal">
+      <div class="modal-content">
+        <div class="next-to">
+            <h3>Vaše coiny:</h3><p id="user-coins"></p><img id="item-to-buy">
+        </div>
+        <div class="next-to">
+            <h3>Cena:</h3><p id="price-item"></p>
+        </div>
+        <button id="buy">Koupit</button>
+        <button id="closeModal" onclick="closeModal()">Zavřít</button>
+    </div>
+  </div>
+  </div>
+
+
+
+<script src="shop.js"></script>
+</body>
+</html>

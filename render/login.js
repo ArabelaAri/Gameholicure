@@ -6,32 +6,26 @@ async function checkTokenAndRedirect() {
     const token = await window.electronAPI.getToken();
     const userIdResult = await window.electronAPI.getUserId({ token: token });
     if (userIdResult.success) {
-      console.log("Uživatel již je přihlášen, přesměrování na domovskou stránku.", userIdResult.user_id);
-      changePage("render/select-apps.html");
+      changePage("render/home-page.html");
     }
 }
 
 checkTokenAndRedirect();
 const btn = document.getElementById("loginBtn");
-const status = document.getElementById("status");
 
 btn.addEventListener("click", async () => {
   const username = document.getElementById("username").value;
   const pswd = document.getElementById("pswd").value;
-
-  if (!username || !pswd) {
-    status.textContent = "Vyplňte prosím všechna pole";
-    return;
-  }
 
   const result = await window.electronAPI.loginUser({
     username,
     pswd
   });
 
-  if (result.success) {
-    status.textContent = "Přihlášení bylo úspěšné";
-    
+  if (!result.success) {
+    alert("Neplatné přihlašovací údaje. Zkuste to znovu.");
+    return;
+  }
     //store token
   await window.electronAPI.setToken(result.token);
 
@@ -45,11 +39,6 @@ btn.addEventListener("click", async () => {
     console.error("Nepodařilo se získat user_id:", userIdResult.message);
   }
     changePage("render/home-page.html");
-    //jen na testování přechodu na select-apps stránku
-    //changePage("render/select-apps.html");
-  } else {
-    status.textContent = result.message;
-  }
 });
 
 

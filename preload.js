@@ -10,8 +10,15 @@ contextBridge.exposeInMainWorld("electronAPI", {
   getToken: () => ipcRenderer.invoke("get-token"),
   setUserId: (id) => ipcRenderer.invoke("set-user-id", id),
   getUserId: (token) => ipcRenderer.invoke("get-user-id", token),
-  sendSelectedApps: (data) => ipcRenderer.invoke("send-selected-apps", data)
-  
+  sendSelectedApps: (data) => ipcRenderer.invoke("send-selected-apps", data),
+  getStatistics: (id) => ipcRenderer.invoke("get-statistics", id),
+  user: (data) => ipcRenderer.invoke("user", data),
+  printHistory: () => ipcRenderer.invoke("print-history"),
+  saveToHistory: (historyText) => ipcRenderer.invoke("save-to-history", historyText),
+  getCurrentDateTime: () => ipcRenderer.invoke("get-current-date-time"),
+  logOut: () => ipcRenderer.invoke("log-out"),
+  userItems: (data) => ipcRenderer.invoke("user-items", data),
+  getItemsShop: () => ipcRenderer.invoke("get-items-shop")
 });
 
 

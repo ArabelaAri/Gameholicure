@@ -61,17 +61,32 @@ function filterApps(apps) {
   });
 }
 
+function isFutureDate(dateStr) {
+  const today = new Date();
+  const inputDate = new Date(dateStr);
+  return inputDate > today;
+}
+function isFutureTime(dateStr, timeStr) {
+  const now = new Date();
+  const inputDateTime = new Date(dateStr + "T" + timeStr);
+  return inputDateTime > now;
+}
+
 apps = [];
 
 async function getInstalledApps() {
   apps = await window.electronAPI.getInstalledApps();
   apps = filterApps(apps);
-  console.log(apps);
-  let list = document.getElementById("appsContainer");
+  let loader = document.querySelector(".loader");
+  if (loader) {
+    loader.remove();
+  }
+  let list = document.getElementById("apps-container");
   for (i = 0; i < apps.length; ++i) {
     const appToSelect = document.createElement('input');
     appToSelect.type = 'checkbox';
     appToSelect.id = apps[i].name; 
+    appToSelect.classList.add("checkbox-effect-2");
     appToSelect.name = apps[i].name;
     appToSelect.value = apps[i].name;
     list.appendChild(appToSelect);
@@ -86,22 +101,27 @@ async function getInstalledApps() {
 
 getInstalledApps();
 
-let selectedApps = [];
-let selectedAppsExe = [];
+
+let appsUser = [];    
 
 async function sendApps() {
-  const checkboxes = document.querySelectorAll('#appsContainer input[type="checkbox"]');
+  appsUser = [];
+  currentIndex = 0;
+  const checkboxes = document.querySelectorAll('#apps-container input[type="checkbox"]');
   checkboxes.forEach(checkbox => {
     if (checkbox.checked) {
       const app = apps.find(a => a.name === checkbox.value);
       if (app) {
-        selectedApps.push(app.name);
-        selectedAppsExe.push(app.exe_name); 
+        appsUser.push({
+          name: app.name,
+          exe_name: app.exe_name,
+          last_opened: ""
+        });
       }
     }
   });
 
-  if (selectedApps.length === 0) {
+  if (appsUser.length === 0) {
     alert("Prosím, vyberte alespoň jednu aplikaci.");
     return;
   }
@@ -109,7 +129,7 @@ async function sendApps() {
   showModal();
 }
 
-var el = document.getElementById("saveAppsBtn");
+var el = document.getElementById("save-apps-btn");
 if (el.addEventListener) {
   el.addEventListener("click", async () => sendApps()); 
 }
@@ -117,13 +137,13 @@ if (el.addEventListener) {
 
 const modal = document.getElementById("myModal");
 let currentIndex = 0;
-let appDates = {};
+
 
 function showModal() {
   const modal = document.getElementById("myModal");
   modal.style.display = "block";
 
-  document.getElementById("appName").innerHTML = selectedApps[currentIndex];
+  document.getElementById("appName").innerHTML = appsUser[currentIndex].name;
 }
 
 async function getId() {
@@ -140,28 +160,34 @@ document.getElementById("saveAppDate").onclick = async  function () {
     alert("Prosím, vyberte datum posledního spuštění.");
     return;
   }
+  else if (isFutureDate(inputDate)) {
+    alert("Prosím, vyberte datum, které není v budoucnosti.");
+    return;
+  }   
   if (inputTime) {
-    appDates[selectedApps[currentIndex]] = inputDate + " " + inputTime + ":00";
+      if (isFutureTime(inputDate, inputTime)) {
+        alert("Prosím, vyberte čas, který není v budoucnosti.");
+        return;
+      }
+    appsUser[currentIndex].last_opened = inputDate + " " + inputTime + ":00";
     document.getElementById("inputTime").value = "";
   } else {
-    appDates[selectedApps[currentIndex]] = inputDate+ " 00:00:00";
+    appsUser[currentIndex].last_opened = inputDate+ " 00:00:00";
   }
   document.getElementById("inputDate").value = "";
 
   currentIndex++;
 
-  if (currentIndex < selectedApps.length) {
+  if (currentIndex < appsUser.length) {
     showModal(); 
   } else {
-    console.log(appDates);
     document.getElementById("myModal").style.display = "none";
     const userIdResult = await getId();
     window.electronAPI.sendSelectedApps({
-      apps: selectedApps,
-      apps_exe: selectedAppsExe,
-      app_dates: appDates,
+      apps: appsUser,
       user_id: userIdResult.user_id
     });
+    window.electronAPI.loadPage("render/home-page.html");
   }
 };
 
